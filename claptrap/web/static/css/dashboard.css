@@ -1,0 +1,237 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #111214;
+    color: #e8e8e8;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.topbar {
+    min-height: 100px;
+    padding: 22px 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #191a1d;
+    border-bottom: 4px solid #f0b323;
+}
+
+.topbar h1 {
+    margin: 0;
+
+    color: #f0b323;
+
+    font-size: 32px;
+    letter-spacing: 3px;
+}
+
+.topbar p {
+    margin: 6px 0 0;
+
+    color: #969696;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.system-online {
+    color: #bdbdbd;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+
+/* Dashboard layout */
+
+.dashboard {
+    max-width: 1400px;
+    margin: auto;
+    padding: 30px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+
+/* Panels */
+
+.panel {
+    background: #1b1d20;
+    border: 1px solid #303238;
+    border-radius: 6px;
+
+    padding: 22px;
+}
+
+.panel h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+
+    color: #f0b323;
+
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+
+    border-bottom: 1px solid #34363b;
+    padding-bottom: 12px;
+}
+
+.devices-panel {
+    grid-column: 1 / -1;
+}
+
+
+/* System metrics */
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+
+    margin-bottom: 22px;
+}
+
+.metric {
+    background: #121315;
+    border: 1px solid #34363b;
+    border-left: 3px solid #f0b323;
+
+    padding: 18px;
+}
+
+.metric-label {
+    display: block;
+
+    color: #898989;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.metric-value {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+/* Status indicators */
+
+.status-dot {
+    display: inline-block;
+
+    width: 9px;
+    height: 9px;
+
+    margin-right: 7px;
+
+    border-radius: 50%;
+}
+
+.status-dot.online {
+    background: #48c774;
+    box-shadow: 0 0 6px #48c774;
+}
+
+.status-dot.offline {
+    background: #e55353;
+    box-shadow: 0 0 6px #e55353;
+}
+
+.status-good {
+    color: #70d995;
+}
+
+.status-bad {
+    color: #ef6b6b;
+}
+
+
+/* Network */
+
+.status-row {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 12px 4px;
+
+    border-bottom: 1px solid #292b30;
+}
+
+.network-details,
+.system-details {
+    margin-top: 20px;
+
+    color: #a9a9a9;
+    font-size: 13px;
+}
+
+
+/* Devices */
+
+.device-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 100px;
+    align-items: center;
+
+    padding: 15px 5px;
+
+    border-bottom: 1px solid #292b30;
+}
+
+.device-row:last-child {
+    border-bottom: none;
+}
+
+.device-type {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #777;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.device-ip {
+    color: #999;
+
+    font-family: monospace;
+}
+
+
+/* Smaller screens */
+
+@media (max-width: 750px) {
+
+    .dashboard {
+        grid-template-columns: 1fr;
+        padding: 15px;
+    }
+
+    .devices-panel {
+        grid-column: auto;
+    }
+
+    .metric-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .device-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claptrap | Homelab Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+
+<body>
+    <header class="topbar">
+        <div>
+            <h1>CLAPTRAP</h1>
+            <p>Homelab Command & Monitoring</p>
+        </div>
+        <div class="system-online">
+            <span class="status-dot online"></span>
+            SYSTEM ONLINE
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <!-- SYSTEM HEALTH -->
+        <section class="panel">
+            <h2>System Health</h2>
+
+            <div class="metric-grid">
+                <div class="metric">
+                    <span class="metric-label">CPU TEMP</span>
+                    <span class="metric-value" id="cpu-temperature">
+                        {{ "%.1f"|format(status.temperature) }}°C
+                    </span>
+                </div>
+
+                <div class="metric">
+                    <span class="metric-label">MEMORY</span>
+                    <span class="metric-value" id="memory-usage">
+                        {{ status.memory }}%
+                    </span>
+                </div>
+
+                <div class="metric">
+                    <span class="metric-label">DISK</span>
+                    <span class="metric-value" id="disk-usage">
+                        {{ status.disk }}%
+                    </span>
+                </div>
+            </div>
+
+            <div class="system-details">
+                <p><strong>Hostname:</strong> {{ status.hostname }}</p>
+                <p><strong>OS:</strong> {{ status.operating_system }}</p>
+                <p><strong>Architecture:</strong> {{ status.architecture }}</p>
+                <p>
+                    <strong>Uptime:</strong>
+                    <span id="uptime">{{ "%.2f"|format(status.uptime) }}</span> hours
+                </p>
+            </div>
+        </section>
+
+        <!-- NETWORK HEALTH -->
+        <section class="panel">
+            <h2>Network Health</h2>
+
+            <div class="status-row">
+                <span>Gateway</span>
+                <span id="gateway-status"
+                      class="{{ 'status-good' if network.gateway_online else 'status-bad' }}">
+                    <span class="status-dot {{ 'online' if network.gateway_online else 'offline' }}"></span>
+                    {{ 'Online' if network.gateway_online else 'Offline' }}
+                </span>
+            </div>
+
+            <div class="status-row">
+                <span>Internet</span>
+                <span id="internet-status"
+                      class="{{ 'status-good' if network.internet_online else 'status-bad' }}">
+                    <span class="status-dot {{ 'online' if network.internet_online else 'offline' }}"></span>
+                    {{ 'Online' if network.internet_online else 'Offline' }}
+                </span>
+            </div>
+
+            <div class="status-row">
+                <span>DNS</span>
+                <span id="dns-status"
+                      class="{{ 'status-good' if network.dns_working else 'status-bad' }}">
+                    <span class="status-dot {{ 'online' if network.dns_working else 'offline' }}"></span>
+                    {{ 'Working' if network.dns_working else 'Failed' }}
+                </span>
+            </div>
+
+            <div class="network-details">
+                <p><strong>IP:</strong> {{ network.ip }}</p>
+                <p><strong>Gateway:</strong> {{ network.gateway }}</p>
+            </div>
+        </section>
+
+        <!-- DEVICE HEALTH -->
+        <section class="panel devices-panel">
+            <h2>Device Health</h2>
+
+            {% for device in devices %}
+            <div class="device-row" id="device-{{ device.id }}">
+                <div>
+                    <strong>{{ device.name }}</strong>
+                    <span class="device-type">{{ device.type }}</span>
+                </div>
+
+                <span class="device-ip">{{ device.ip }}</span>
+
+                <span id="device-status-{{ device.id }}"
+                      class="{{ 'status-good' if device.online else 'status-bad' }}">
+                    <span class="status-dot {{ 'online' if device.online else 'offline' }}"></span>
+                    {{ 'Online' if device.online else 'Offline' }}
+                </span>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
